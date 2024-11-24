@@ -1,163 +1,394 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfólio</title>
+    <title>Portfólio Vitor Hugo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200;400;600;800&display=swap" rel="stylesheet">
     <style>
-        /* Estilos Gerais */
-        body {
-            font-family: 'Arial', sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #0d1b2a, #1b263b);
-            color: #ffffff;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-blue: #00ffff;
+            --deep-space: #0a0a2a;
+            --nebula-pink: #ff00ff;
+            --star-white: #ffffff;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: var(--deep-space);
+            color: white;
             overflow-x: hidden;
         }
 
-        /* Cabeçalho */
+        /* Cosmos Background Animation */
+        .cosmos-background {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 50% 50%, #1a1a4a 0%, #0a0a2a 50%, #000 100%);
+            overflow: hidden;
+        }
+
+        .nebula {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at center, 
+                    rgba(255,0,255,0.2) 0%, 
+                    rgba(0,255,255,0.1) 50%, 
+                    transparent 70%);
+            animation: nebulaFloat 20s ease infinite;
+            filter: blur(8px);
+        }
+
+        @keyframes nebulaFloat {
+            0%, 100% { transform: scale(1) translate(0, 0) rotate(0deg); }
+            33% { transform: scale(1.1) translate(5%, 2%) rotate(5deg); }
+            66% { transform: scale(0.9) translate(-3%, -1%) rotate(-3deg); }
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: starPulse var(--duration) ease-in-out infinite;
+        }
+
+        @keyframes starPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.7; }
+        }
+
+        /* Main Content Styles */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
         header {
-            text-align: center;
-            padding: 40px 20px;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(5px);
-            border-bottom: 2px solid #1f4068;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.7);
-        }
-
-        header h1 {
-            font-size: 2.8rem;
-            margin: 0;
-            color: #00d9ff;
-            text-shadow: 0 0 10px #00d9ff, 0 0 20px #0077b6;
-        }
-
-        header p {
-            font-size: 1.2rem;
-            margin-top: 10px;
-            color: #ffffffa8;
-        }
-
-        /* Navegação */
-        nav {
+            height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
-            background: #1b263b;
-            padding: 10px 0;
-            border-top: 2px solid #1f4068;
+            align-items: center;
+            text-align: center;
+            position: relative;
         }
 
-        nav a {
-            color: #00d9ff;
+        .title {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 4rem;
+            letter-spacing: 4px;
+            color: var(--star-white);
+            text-shadow: 
+                0 0 10px var(--neon-blue),
+                0 0 20px var(--neon-blue),
+                0 0 30px var(--neon-blue);
+            animation: titleGlow 3s ease-in-out infinite alternate;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes titleGlow {
+            from { text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue); }
+            to { text-shadow: 0 0 20px var(--neon-blue), 0 0 30px var(--neon-blue), 0 0 40px var(--neon-blue); }
+        }
+
+        .subtitle {
             font-size: 1.2rem;
-            text-decoration: none;
-            padding: 10px 20px;
-            margin: 0 10px;
-            border: 2px solid transparent;
-            border-radius: 25px;
-            transition: all 0.3s ease-in-out;
+            max-width: 800px;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(10, 10, 42, 0.7);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.1);
         }
 
-        nav a:hover {
-            background: #0077b6;
-            border-color: #00d9ff;
-            box-shadow: 0 0 15px #00d9ff, 0 0 30px #0077b6;
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
         }
 
-        /* Seções */
-        section {
-            padding: 40px 20px;
-            max-width: 900px;
-            margin: 30px auto;
-            display: none;
-            border-radius: 15px;
-            background: rgba(0, 0, 0, 0.6);
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 217, 255, 0.4);
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) translateX(-50%); }
+            50% { transform: translateY(-20px) translateX(-50%); }
         }
 
-        section.active {
-            display: block;
-            animation: fadeIn 1s ease;
+        .section {
+            min-height: 100vh;
+            padding: 6rem 0;
+            position: relative;
         }
 
-        section h2 {
-            font-size: 2rem;
-            color: #00d9ff;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px #00d9ff;
+        .section-title {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            color: var(--neon-blue);
         }
 
-        section p {
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            padding: 2rem;
+        }
+
+        .project-card {
+            background: rgba(10, 10, 42, 0.7);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                transparent 0%, 
+                rgba(0, 255, 255, 0.1) 50%, 
+                transparent 100%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 1.2rem;
+            color: var(--neon-blue);
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            margin-bottom: 1.5rem;
             line-height: 1.6;
-            color: #c5d9e8;
         }
 
-        section ul {
-            margin-top: 20px;
-            padding-left: 20px;
+        .project-link {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            color: var(--neon-blue);
+            text-decoration: none;
+            border: 1px solid var(--neon-blue);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-family: 'Syncopate', sans-serif;
+            font-size: 0.9rem;
         }
 
-        section ul li {
-            margin-bottom: 10px;
-            color: #c5d9e8;
+        .project-link:hover {
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
         }
 
-        /* Animação */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
+        .navigation {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid var(--neon-blue);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+            .navigation {
+                right: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
             }
         }
     </style>
 </head>
 <body>
+    <div class="cosmos-background">
+        <div class="nebula"></div>
+        <div class="stars" id="starsContainer"></div>
+    </div>
 
-<header>
-    <h1>Meu Portfólio</h1>
-    <p>Um pouco sobre mim.</p>
-     <p1>Me chamo Vitor, tenho 26 anos, apaixonado pela galaxia e o São Paulo Futebol Clube, estou em busca de realizar meus sonhos e concluir meus objetivos. aqui um pouco do meu mundinho, onde voce encontra artes pessoais e academicas, espero que goste!</p1>
-</header>
+    <header id="home">
+        <h1 class="title">Portfólio Vitor Hugo</h1>
+        <p class="subtitle">
+            Me chamo Vitor, tenho 26 anos, apaixonado pela galaxia e o São Paulo Futebol Clube, 
+            estou em busca de realizar meus sonhos e concluir meus objetivos. 
+            aqui um pouco do meu mundinho, onde voce encontra artes pessoais e academicas, 
+            espero que goste.
+        </p>
+        <div class="scroll-indicator">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </header>
 
-<nav>
-    <a href="#" onclick="showSection('pessoais')">Projetos Pessoais</a>
-    <a href="#" onclick="showSection('academicos')">Projetos Acadêmicos</a>
-</nav>
+    <section id="personal" class="section">
+        <div class="container">
+            <h2 class="section-title">Projetos Pessoais</h2>
+            <div class="projects-grid">
+                <!-- Projetos Pessoais -->
+                <div class="project-card">
+                    <img src="/api/placeholder/300/200" alt="Projeto 1" class="project-image">
+                    <div class="project-content">
+                        <h3 class="project-title">Projeto 1</h3>
+                        <p class="project-description">Descrição detalhada do projeto pessoal.</p>
+                        <a href="#" class="project-link">Ver Projeto</a>
+                    </div>
+                </div>
+                <!-- Adicione mais projetos pessoais aqui -->
+            </div>
+        </div>
+    </section>
 
-<section id="pessoais">
-    <h2>Projetos Pessoais</h2>
-    <p>Estes são projetos que desenvolvi independentemente, com foco em inovação e criatividade:</p>
-    <ul>
-        <li>Desenvolvimento de um chatbot com IA</li>
-        <li>Aplicativo de controle financeiro</li>
-        <li>Website interativo para portfólios online</li>
-    </ul>
-</section>
+    <section id="academic" class="section">
+        <div class="container">
+            <h2 class="section-title">Projetos Acadêmicos</h2>
+            <div class="projects-grid">
+                <!-- Projetos Acadêmicos -->
+                <div class="project-card">
+                    <img src="/api/placeholder/300/200" alt="Projeto Acadêmico 1" class="project-image">
+                    <div class="project-content">
+                        <h3 class="project-title">Projeto Acadêmico 1</h3>
+                        <p class="project-description">Descrição detalhada do projeto acadêmico.</p>
+                        <a href="#" class="project-link">Ver Projeto</a>
+                    </div>
+                </div>
+                <!-- Adicione mais projetos acadêmicos aqui -->
+            </div>
+        </div>
+    </section>
 
-<section id="academicos">
-    <h2>Projetos Acadêmicos</h2>
-    <p>Projetos realizados durante meu curso, aplicando conceitos aprendidos em sala de aula:</p>
-    <ul>
-        <li>Simulador de trânsito com inteligência artificial</li>
-        <li>Sistema de gerenciamento de eventos</li>
-        <li>Análise de grandes volumes de dados com Python</li>
-    </ul>
-</section>
+    <nav class="navigation">
+        <div class="nav-dot active" onclick="scrollToSection('home')"></div>
+        <div class="nav-dot" onclick="scrollToSection('personal')"></div>
+        <div class="nav-dot" onclick="scrollToSection('academic')"></div>
+    </nav>
 
-<script>
-    function showSection(id) {
-        // Esconde todas as seções
-        document.querySelectorAll("section").forEach(section => {
-            section.classList.remove("active");
-        });
-        // Mostra a seção selecionada
-        document.getElementById(id).classList.add("active");
-    }
-</script>
+    <script>
+        // Criar estrelas dinamicamente
+        function createStars() {
+            const starsContainer = document.getElementById('starsContainer');
+            const numberOfStars = 200;
 
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Posição aleatória
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // Tamanho aleatório
+                const size = Math.random() * 3;
+                
+                // Duração da animação aleatória
+                const duration = 2 + Math.random() * 3;
+                
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.setProperty('--duration', `${duration}s`);
+                
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Smooth scroll para seções
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Atualizar navegação baseado na posição do scroll
+        function updateNavigation() {
+            const sections = ['home', 'personal', 'academic'];
+            const scrollPosition = window.scrollY;
+
+            sections.forEach((sectionId, index) => {
+                const section = document.getElementById(sectionId);
+                const sectionTop = section.offsetTop - 100;
+                const sectionBottom = sectionTop + section.offsetHeight;
+
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    document.querySelectorAll('.nav-dot').forEach(dot => dot.classList.remove('active'));
+                    document.querySelectorAll('.nav-dot')[index].classList.add('active');
+                }
+            });
+        }
+
+        // Inicialização
+        createStars();
+        window.addEventListener('scroll', updateNavigation);
+    </script>
 </body>
 </html>
